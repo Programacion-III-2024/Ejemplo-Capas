@@ -22,9 +22,29 @@ namespace Modelos
 
         public void Borrar()
         {
-            string sql = $"DELETE FROM pizzas WHERE id ='{this.Id}')";
+            string sql = $"UPDATE pizzas SET eliminado = true WHERE id ='{this.Id}'";
             this.Comando.CommandText = sql;
             this.Comando.ExecuteNonQuery();
+        }
+
+        public List<PizzaModelo> ObtenerTodos()
+        {
+            List<PizzaModelo> pizzas = new List<PizzaModelo>();
+
+            string sql = $"SELECT * FROM pizzas WHERE eliminado = false";
+            this.Comando.CommandText = sql;
+            this.Lector = this.Comando.ExecuteReader();
+
+            while (this.Lector.Read())
+            {
+                PizzaModelo pizza = new PizzaModelo();
+                pizza.Id = Int32.Parse(this.Lector["Id"].ToString());
+                pizza.Nombre = this.Lector["Nombre"].ToString();
+                pizza.Precio = Int32.Parse(this.Lector["Precio"].ToString());
+                pizzas.Add(pizza);
+            }
+            return pizzas;
+
         }
     }
 }
