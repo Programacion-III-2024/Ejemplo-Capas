@@ -46,5 +46,18 @@ namespace Modelos
             return pizzas;
 
         }
+
+        public void Buscar(int id)
+        {
+            string sql = $"SELECT * FROM pizzas WHERE eliminado = false and id = {id}";
+            this.Comando.CommandText = sql;
+            this.Lector = this.Comando.ExecuteReader();
+            this.Lector.Read();
+
+            this.Id = Int32.Parse(this.Lector["Id"].ToString());
+            this.Nombre = this.Lector["Nombre"].ToString();
+            this.Precio = Int32.Parse(this.Lector["Precio"].ToString());
+
+        }
     }
 }

@@ -33,6 +33,19 @@ namespace Controladores
 
         }
 
+        public static Dictionary<string,string> Buscar(int id)
+        {
+
+            PizzaModelo p = new PizzaModelo();
+            p.Buscar(id);
+            Dictionary<string, string> resultado = new Dictionary<string, string>();
+            resultado.Add("id", p.Id.ToString());
+            resultado.Add("nombre", p.Nombre);
+            resultado.Add("precio", p.Precio.ToString());
+
+            return resultado;
+
+        }
         
 
         public static DataTable Listar()
