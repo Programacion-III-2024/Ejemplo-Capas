@@ -32,7 +32,23 @@ namespace API.Controllers
             }
             return pizzitas;
         }
+        [Route("api/pizza/")]
+        public IHttpActionResult Post(PizzaModel pizza)
+        {
+            PizzaControlador.Crear(pizza.Nombre,pizza.Precio.ToString());
+            Dictionary<string, string> resultado = new Dictionary<string, string>();
+            resultado.Add("mensaje", "Pizza creada");
+            return Ok(resultado);
+        }
 
+        [Route("api/pizza/{id:int}")]
+        public IHttpActionResult Put(int id, PizzaModel pizza)
+        {
+            PizzaControlador.Modificar(id.ToString(), pizza.Nombre, pizza.Precio.ToString());
+            Dictionary<string, string> resultado = new Dictionary<string, string>();
+            resultado.Add("mensaje", "Pizza creada");
+            return Ok(resultado);
+        }
         [Route("api/pizza/{id:int}")]
         public PizzaModel Get(int id)
         {
@@ -43,7 +59,6 @@ namespace API.Controllers
             pizza.Nombre = p["nombre"];
             pizza.Precio = Int32.Parse(p["precio"]);
             return pizza;
-
 
 
         }

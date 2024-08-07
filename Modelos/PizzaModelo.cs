@@ -14,10 +14,22 @@ namespace Modelos
 
         public void Guardar()
         {
+            if (this.Id == 0) insertar();
+            if (this.Id > 0) modificar();
+        }
+
+        private void modificar()
+        {
+            string sql = $"UPDATE pizzas set nombre ='{this.Nombre}', precio = {this.Precio} WHERE id = {this.Id}";
+            this.Comando.CommandText = sql;
+            this.Comando.ExecuteNonQuery();
+        }
+
+        private void insertar()
+        {
             string sql = $"INSERT INTO pizzas (nombre,precio) VALUES('{this.Nombre}',{this.Precio})";
             this.Comando.CommandText = sql;
             this.Comando.ExecuteNonQuery();
-
         }
 
         public void Borrar()
@@ -43,7 +55,9 @@ namespace Modelos
                 pizza.Precio = Int32.Parse(this.Lector["Precio"].ToString());
                 pizzas.Add(pizza);
             }
+            this.Lector.Close();
             return pizzas;
+            
 
         }
 
@@ -57,6 +71,8 @@ namespace Modelos
             this.Id = Int32.Parse(this.Lector["Id"].ToString());
             this.Nombre = this.Lector["Nombre"].ToString();
             this.Precio = Int32.Parse(this.Lector["Precio"].ToString());
+
+            this.Lector.Close();
 
         }
     }

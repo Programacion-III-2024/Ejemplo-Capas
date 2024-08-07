@@ -30,6 +30,13 @@ namespace Controladores
 
         public static void Modificar(string id, string nombre, string precio)
         {
+            PizzaModelo pizza = new PizzaModelo();
+            pizza.Buscar(Int32.Parse(id));
+
+            pizza.Nombre = nombre;
+            pizza.Precio = Int32.Parse(precio);
+
+            pizza.Guardar();
 
         }
 

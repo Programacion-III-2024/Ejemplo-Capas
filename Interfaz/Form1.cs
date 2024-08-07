@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 using Controladores;
 
@@ -62,10 +63,10 @@ namespace Interfaz
 
         private void BotonModificar_Click(object sender, EventArgs e)
         {
-            /*string id = tablaDeDatos.SelectedRows[0].Cells["id"].Value.ToString();
+            string id = tablaDeDatos.SelectedRows[0].Cells["id"].Value.ToString();
             PizzaControlador.Modificar(id, TextBoxNombre.Text, TextBoxPrecio.Text);
             MessageBox.Show("Pizza Modificada");
-            refrescarTablaDeDatos();*/
+            refrescarTablaDeDatos();
         }
     }
 }
