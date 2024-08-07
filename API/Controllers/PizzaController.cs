@@ -44,22 +44,48 @@ namespace API.Controllers
         [Route("api/pizza/{id:int}")]
         public IHttpActionResult Put(int id, PizzaModel pizza)
         {
-            PizzaControlador.Modificar(id.ToString(), pizza.Nombre, pizza.Precio.ToString());
             Dictionary<string, string> resultado = new Dictionary<string, string>();
-            resultado.Add("mensaje", "Pizza creada");
-            return Ok(resultado);
+            bool existe = PizzaControlador.Modificar(id.ToString(), pizza.Nombre, pizza.Precio.ToString());
+
+            if (existe){
+                resultado.Add("mensaje", "Pizza creada");
+                return Ok(resultado);
+            }
+
+            return NotFound();
+
         }
         [Route("api/pizza/{id:int}")]
-        public PizzaModel Get(int id)
+        public IHttpActionResult Delete(int id)
+        {
+            Dictionary<string, string> resultado = new Dictionary<string, string>();
+
+            bool existe = PizzaControlador.Eliminar(id.ToString());
+
+            if (existe)
+            {
+                resultado.Add("mensaje", "Pizza Eliminada");
+                return Ok(resultado);
+            }
+
+            return NotFound();
+        }
+
+        [Route("api/pizza/{id:int}")]
+        public IHttpActionResult Get(int id)
         {
             PizzaModel pizza = new PizzaModel();
             Dictionary<string,string> p = PizzaControlador.Buscar(id);
 
-            pizza.Id = Int32.Parse(p["id"]);
-            pizza.Nombre = p["nombre"];
-            pizza.Precio = Int32.Parse(p["precio"]);
-            return pizza;
+            if(p["resultado"] == "true")
+            {
+                pizza.Id = Int32.Parse(p["id"]);
+                pizza.Nombre = p["nombre"];
+                pizza.Precio = Int32.Parse(p["precio"]);
+                return Ok(pizza);
 
+            }
+            return NotFound();
 
         }
     }

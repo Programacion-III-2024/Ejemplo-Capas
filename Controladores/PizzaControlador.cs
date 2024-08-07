@@ -21,39 +21,58 @@ namespace Controladores
 
         }
 
-        public static void Eliminar(string id)
+        public static bool Eliminar(string id)
         {
             PizzaModelo pizza = new PizzaModelo();
-            pizza.Id = Int32.Parse(id);
-            pizza.Borrar();
+            if (pizza.Buscar(Int32.Parse(id)))
+            {
+                pizza.Borrar();
+                return true;
+            }
+
+            return false;
         }
 
-        public static void Modificar(string id, string nombre, string precio)
+        public static bool Modificar(string id, string nombre, string precio)
         {
             PizzaModelo pizza = new PizzaModelo();
-            pizza.Buscar(Int32.Parse(id));
+            if (pizza.Buscar(Int32.Parse(id)))
+            {
+                pizza.Nombre = nombre;
+                pizza.Precio = Int32.Parse(precio);
 
-            pizza.Nombre = nombre;
-            pizza.Precio = Int32.Parse(precio);
+                pizza.Guardar();
+                return true;
+            }
 
-            pizza.Guardar();
+            return false;
+
+
+          
 
         }
 
         public static Dictionary<string,string> Buscar(int id)
         {
-
-            PizzaModelo p = new PizzaModelo();
-            p.Buscar(id);
             Dictionary<string, string> resultado = new Dictionary<string, string>();
-            resultado.Add("id", p.Id.ToString());
-            resultado.Add("nombre", p.Nombre);
-            resultado.Add("precio", p.Precio.ToString());
-
+            PizzaModelo p = new PizzaModelo();
+            if (p.Buscar(id))
+            {
+                resultado.Add("resultado", "true");
+                resultado.Add("id", p.Id.ToString());
+                resultado.Add("nombre", p.Nombre);
+                resultado.Add("precio", p.Precio.ToString());
+                return resultado;
+            }
+            resultado.Add("resultado", "false");
             return resultado;
 
+
+
+
+
         }
-        
+
 
         public static DataTable Listar()
         {

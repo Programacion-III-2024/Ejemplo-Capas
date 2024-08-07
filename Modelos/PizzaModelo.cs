@@ -61,18 +61,23 @@ namespace Modelos
 
         }
 
-        public void Buscar(int id)
+        public bool Buscar(int id)
         {
             string sql = $"SELECT * FROM pizzas WHERE eliminado = false and id = {id}";
             this.Comando.CommandText = sql;
             this.Lector = this.Comando.ExecuteReader();
-            this.Lector.Read();
 
-            this.Id = Int32.Parse(this.Lector["Id"].ToString());
-            this.Nombre = this.Lector["Nombre"].ToString();
-            this.Precio = Int32.Parse(this.Lector["Precio"].ToString());
+            if (this.Lector.HasRows) { 
+                this.Lector.Read();
+                this.Id = Int32.Parse(this.Lector["Id"].ToString());
+                this.Nombre = this.Lector["Nombre"].ToString();
+                this.Precio = Int32.Parse(this.Lector["Precio"].ToString());
+                this.Lector.Close();
+                return true;
 
+            }
             this.Lector.Close();
+            return false;
 
         }
     }
