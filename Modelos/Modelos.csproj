@@ -110,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Modelo.cs" />
+    <Compile Include="ModeloREST.cs" />
     <Compile Include="PizzaModelo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
